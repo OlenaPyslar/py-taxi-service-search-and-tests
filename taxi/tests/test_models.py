@@ -15,7 +15,7 @@ class ModelsTest(TestCase):
             password="test12345",
             first_name="Test",
             last_name="Test",
-            license_number="Test",
+            license_number="TST12345",
         )
         self.assertEqual(
             str(driver),

@@ -21,4 +21,5 @@ class CarSearchTests(TestCase):
         response = self.client.get(reverse("taxi:car-list") + "?model=cor")
         self.assertEqual(response.status_code, 200)
         cars = response.context['object_list']
-        self.assertTrue(all('cor' in c.model.lower() for c in cars))
+        self.assertEqual(len(cars), 1)
+        self.assertEqual(cars[0].model, 'Corolla')
