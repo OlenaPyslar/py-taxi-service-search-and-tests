@@ -20,5 +20,5 @@ class ManufacturerSearchTests(TestCase):
         res = self.client.get(reverse("taxi:manufacturer-list") + "?name=test")
         self.assertEqual(res.status_code, 200)
         manufacturers = list(res.context["manufacturer_list"])
-        self.assertEqual(len(manufacturers), 1)
-        self.assertEqual(manufacturers[0].name, "test")
+        self.assertEqual(len(manufacturers), 2)
+        self.assertEqual({m.name for m in manufacturers}, {"test", "another test"})
