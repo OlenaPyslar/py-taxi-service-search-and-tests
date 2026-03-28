@@ -17,16 +17,16 @@ class DriverSearchTests(TestCase):
         User.objects.create_user(username="jason", password="pass", license_number="TSN34567")
 
     def test_search_by_username_returns_matching_users(self):
-        response = self.client.get(reverse("taxi:driver-list") + "?username=ja")
+        response = self.client.get(reverse("taxi:driver-list") + "?username=jan")
 
         self.assertEqual(response.status_code, 200)
         object_list = response.context["object_list"]
         self.assertEqual(len(object_list), 1)
         usernames = [u.username for u in object_list]
-        self.assertEqual(set(usernames), ["jane"])
+        self.assertEqual(set(usernames), {"jane"})
 
     def test_search_by_username_case_insensitive(self):
-        response = self.client.get(reverse("taxi:driver-list") + "?username=JA")
+        response = self.client.get(reverse("taxi:driver-list") + "?username=JAN")
 
         self.assertEqual(response.status_code, 200)
         object_list = response.context["object_list"]
