@@ -42,3 +42,4 @@ class DriverSearchTests(TestCase):
         self.assertEqual(len(object_list), 2)
         usernames = [u.username for u in object_list]
         self.assertEqual(set(usernames), {"jane", "jason"})
+
