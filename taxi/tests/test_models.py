@@ -5,9 +5,12 @@ from taxi.models import Manufacturer, Car
 
 
 class ModelsTest(TestCase):
-    def test_manufacturer_str(self ):
+    def test_manufacturer_str(self):
         manufacturer = Manufacturer.objects.create(name="Test", country="Test")
-        self.assertEqual(str(manufacturer), f"{manufacturer.name} {manufacturer.country}")
+        self.assertEqual(
+            str(manufacturer),
+            f"{manufacturer.name} {manufacturer.country}"
+        )
 
     def test_driver_str(self):
         driver = get_user_model().objects.create_user(

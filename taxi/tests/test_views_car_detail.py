@@ -16,9 +16,17 @@ class CarDetailViewTests(TestCase):
         self.car = Car.objects.create(model="X", manufacturer=manufacture)
 
     def test_detail_existing_returns_200(self):
-        response = self.client.get(reverse("taxi:car-detail", kwargs={"pk": self.car.pk}))
+        response = self.client.get(
+            reverse(
+                "taxi:car-detail",
+                kwargs={"pk": self.car.pk}
+            ))
         self.assertEqual(response.status_code, 200)
 
     def test_nonexistent_returns_404(self):
-        response = self.client.get(reverse("taxi:car-detail", kwargs={"pk": 999}))
+        response = self.client.get(
+            reverse(
+                "taxi:car-detail",
+                kwargs={"pk": 999}
+            ))
         self.assertEqual(response.status_code, 404)

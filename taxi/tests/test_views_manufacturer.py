@@ -11,6 +11,7 @@ class PublicManufacturerTest(TestCase):
         res = self.client.get(url)
         self.assertNotEqual(res.status_code, 200)
 
+
 class PrivateManufacturerTest(TestCase):
     def setUp(self) -> None:
         self.user = get_user_model().objects.create_user(
@@ -29,4 +30,3 @@ class PrivateManufacturerTest(TestCase):
             list(res.context["manufacturer_list"]),
             list(manufacturers),
         )
-

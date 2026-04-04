@@ -21,4 +21,7 @@ class ManufacturerSearchTests(TestCase):
         self.assertEqual(res.status_code, 200)
         manufacturers = list(res.context["manufacturer_list"])
         self.assertEqual(len(manufacturers), 2)
-        self.assertEqual({m.name for m in manufacturers}, {"test", "another test"})
+        self.assertEqual(
+            {m.name for m in manufacturers},
+            {"test", "another test"}
+        )

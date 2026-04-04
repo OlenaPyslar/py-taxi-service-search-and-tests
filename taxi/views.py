@@ -6,8 +6,13 @@ from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Driver, Car, Manufacturer
-from .forms import DriverCreationForm, DriverLicenseUpdateForm, CarForm, DriverSearchForm, CarSearchForm, \
-    ManufacturerSearchForm
+from .forms import (
+    DriverCreationForm,
+    DriverLicenseUpdateForm,
+    CarForm,
+    DriverSearchForm,
+    CarSearchForm,
+    ManufacturerSearchForm)
 
 
 @login_required
@@ -38,17 +43,17 @@ class ManufacturerListView(LoginRequiredMixin, generic.ListView):
     paginate_by = 5
 
     def get_context_data(
-        self, *, object_list = None, **kwargs
+        self, *, object_list=None, **kwargs
     ):
         context = super(ManufacturerListView, self).get_context_data(**kwargs)
         context["search_form"] = ManufacturerSearchForm()
         return context
 
     def get_queryset(self):
-        queryset = Manufacturer.objects.all()
+        queryset = Manufacturer.objects.all().order_by("name")
         name = self.request.GET.get("name")
         if name:
-            return queryset.filter(name__icontains=name)
+            return queryset.filter(name__icontains=name).order_by("name")
         return queryset
 
 
@@ -74,17 +79,17 @@ class CarListView(LoginRequiredMixin, generic.ListView):
     paginate_by = 5
 
     def get_context_data(
-        self, *, object_list = None, **kwargs
+        self, *, object_list=None, **kwargs
     ):
         context = super(CarListView, self).get_context_data(**kwargs)
         context["search_form"] = CarSearchForm()
         return context
 
     def get_queryset(self):
-        queryset = Car.objects.select_related("manufacturer")
+        queryset = Car.objects.select_related("manufacturer").order_by("pk")
         model = self.request.GET.get("model")
         if model:
-            return queryset.filter(model__icontains=model)
+            return queryset.filter(model__icontains=model).order_by("pk")
         return queryset
 
 
@@ -114,17 +119,19 @@ class DriverListView(LoginRequiredMixin, generic.ListView):
     paginate_by = 5
 
     def get_context_data(
-        self, *, object_list = None, **kwargs
+        self, *, object_list=None, **kwargs
     ):
         context = super(DriverListView, self).get_context_data(**kwargs)
         context["search_form"] = DriverSearchForm()
         return context
 
     def get_queryset(self):
-        queryset = Driver.objects.all()
+        queryset = Driver.objects.all().order_by("username")
         username = self.request.GET.get("username")
         if username:
-            return queryset.filter(username__icontains=username)
+            return queryset.filter(
+                username__icontains=username
+            ).order_by("username")
         return queryset
 
 
